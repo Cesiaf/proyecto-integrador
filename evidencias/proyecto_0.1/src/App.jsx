@@ -3,6 +3,7 @@ import axios from 'axios';
 import ProductList from './components/ProductList';
 import StatsPanel from './components/StatsPanel';
 import SearchBar from './components/SearchBar';
+import ThemeToggle from "./components/ThemeToggle";
 
 function App() {
   // Estado para almacenar la lista de productos obtenidos de la API
@@ -15,7 +16,24 @@ function App() {
   const filtrados = productos.filter((p) =>
     p.title.toLowerCase().includes(busqueda.toLowerCase())
   );
+  const [theme, setTheme] = useState("light");
 
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    const systemPrefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    setTheme(savedTheme || (systemPrefersDark ? "dark" : "light"));
+  }, []);
+
+  useEffect(() => {
+    const html = document.documentElement;
+    html.classList.remove("dark", "light");
+    html.classList.add(theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
   // Efecto que se ejecuta una sola vez al montar el componente
   // Realiza una petición GET a la API para obtener los productos
   useEffect(() => {
@@ -29,6 +47,11 @@ function App() {
     // Contenedor principal con estilos de Tailwind CSS
     <div className="min-h-screen flex items-center justify-center px-30 pb-40">
       <div className="max-w-6xl mx-auto w-full">
+      <div className=" bg-white dark:bg-gray-900 px-4 py-4 space-y-4 text-indigo-600 dark:text-indigo-200">
+        <div className="pt-2">
+          <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+        </div>
+      </div>
         {/* Título del catálogo */}
         <h1 className="text-base font-bold mb-6 pt-16 text-center text-white font-serif">
           Catálogo de Productos
