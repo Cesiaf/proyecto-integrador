@@ -51,6 +51,12 @@ function App() {
         </button>
         {/* Panel de estadísticas, visible según el estado showStats */}
         {<StatsPanel productos={filtrados} show={showStats} />}
+        {/* Mensaje de advertencia si no hay productos filtrados */}
+        {filtrados.length === 0 && busqueda.trim() !== "" && (
+          <div className='text-center text-red-500 font-semibold my-4'>
+            No se encontraron productos que coincidan con "{busqueda}".
+          </div>
+        )}
         {/* Lista de productos filtrados */}
         <ProductList productos={filtrados} />
       </div>
