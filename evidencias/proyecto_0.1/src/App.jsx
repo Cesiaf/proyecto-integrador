@@ -6,6 +6,7 @@ import SearchBar from "./components/SearchBar";
 import ThemeToggle from "./components/ThemeToggle";
 import AdvancedFilter from "./components/AdvancedFilter";
 import ChartsPanel from "./components/ChartsPanel";
+import Pagination from "./components/Pagination";
 
 // Exportar productos a JSON
 function exportToJSON(data, filename = "productos.json") {
@@ -36,20 +37,18 @@ function exportToCSV(data, filename = "productos.csv") {
 }
 
 function App() {
-  // Estado para almacenar la lista de productos obtenidos de la API
+  // Estados principales
   const [productos, setProductos] = useState([]);
-  // Estado para mostrar u ocultar el panel de estadísticas
   const [showStats, setShowStats] = useState(false);
-  // Estado para la búsqueda
   const [busqueda, setBusqueda] = useState("");
-  // Estado para el tema (claro/oscuro)
   const [theme, setTheme] = useState("light");
-  // Estado para la categoría seleccionada
   const [categoria, setCategoria] = useState("");
-  // Estado para el orden seleccionado
   const [orden, setOrden] = useState("");
-  // Estado para mensajes de éxito/error
   const [mensaje, setMensaje] = useState(null);
+
+  // Paginación
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
 
   // Obtener categorías únicas
   const categorias = Array.from(new Set(productos.map((p) => p.category)));
@@ -65,6 +64,17 @@ function App() {
       if (orden === "rating-desc") return b.rating - a.rating;
       return 0;
     });
+
+  // Productos de la página actual
+  const totalPages = Math.ceil(filtrados.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const productosPagina = filtrados.slice(startIndex, endIndex);
+
+  // Volver a la página 1 si cambian los filtros/búsqueda/categoría
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [busqueda, categoria, orden, productos]);
 
   // Inicializar tema desde localStorage o preferencia del sistema
   useEffect(() => {
@@ -149,7 +159,7 @@ function App() {
             className="border px-3 py-1 rounded bg-green-500 text-white hover:bg-green-600"
             onClick={() => {
               try {
-                exportToJSON(filtrados);
+                exportToJSON(productosPagina);
                 setMensaje("¡Exportación a JSON exitosa!");
               } catch {
                 setMensaje("Error al exportar a JSON.");
@@ -162,7 +172,7 @@ function App() {
             className="border px-3 py-1 rounded bg-blue-500 text-white hover:bg-blue-600"
             onClick={() => {
               try {
-                exportToCSV(filtrados);
+                exportToCSV(productosPagina);
                 setMensaje("¡Exportación a CSV exitosa!");
               } catch {
                 setMensaje("Error al exportar a CSV.");
@@ -182,8 +192,15 @@ function App() {
             No se encontraron productos que coincidan con "{busqueda}".
           </div>
         )}
-        {/* Lista de productos filtrados */}
-        <ProductList productos={filtrados} />
+
+        {/* Lista de productos solo de la página actual */}
+        <ProductList productos={productosPagina} />
+        {/* PAGINACIÓN: Botones abajo */}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
       </div>
     </div>
   );
