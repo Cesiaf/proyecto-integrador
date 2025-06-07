@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ProductList from './components/ProductList';
 import StatsPanel from './components/StatsPanel';
+import SearchBar from './components/SearchBar';
 
 function App() {
   // Estado para almacenar la lista de productos obtenidos de la API
   const [productos, setProductos] = useState([]);
-  // Estado para el texto de búsqueda ingresado por el usuario
-  const [busqueda, setBusqueda] = useState("");
   // Estado para mostrar u ocultar el panel de estadísticas
   const [showStats, setShowStats] = useState(false);
-
+  // Estado para la búsqueda
+  const [busqueda, setBusqueda] = useState("");
   // Filtra los productos según el texto de búsqueda (case-insensitive)
   const filtrados = productos.filter((p) =>
     p.title.toLowerCase().includes(busqueda.toLowerCase())
@@ -33,11 +33,8 @@ function App() {
         <h1 className="text-base font-bold mb-6 pt-16 text-center text-white font-serif">
           Catálogo de Productos
         </h1>
-        {/* Input para búsqueda de productos */}
-        <input
-          className="border p-2 m-4 focus:outline-none focus:ring-1 focus:ring-purple-400 transition"
-          type="text"
-          placeholder="Buscar..."
+        {/* Input de búsqueda */}
+        <SearchBar
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
         />
@@ -53,7 +50,7 @@ function App() {
         {<StatsPanel productos={filtrados} show={showStats} />}
         {/* Mensaje de advertencia si no hay productos filtrados */}
         {filtrados.length === 0 && busqueda.trim() !== "" && (
-          <div className='text-center text-red-500 font-semibold my-4'>
+          <div className="text-center text-red-500 font-semibold my-4">
             No se encontraron productos que coincidan con "{busqueda}".
           </div>
         )}
