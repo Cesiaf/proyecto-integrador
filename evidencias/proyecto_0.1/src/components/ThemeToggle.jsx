@@ -1,7 +1,9 @@
 // components/ThemeToggle.jsx
+
 import React from "react";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
 
+/*ThemeToggle (Componente de botón para alternar entre los temas claro y oscuro.)*/
 const ThemeToggle = ({ theme, toggleTheme }) => (
   <button
     onClick={toggleTheme}
@@ -11,6 +13,7 @@ const ThemeToggle = ({ theme, toggleTheme }) => (
             ${theme === "dark" ? "bg-gray-700" : "bg-gray-200"}
         `}
   >
+    {/* Indicador deslizante con ícono de tema */}
     <span
       className={`
                 flex items-center justify-center w-6 h-6 rounded-full shadow-md transform
@@ -23,8 +26,10 @@ const ThemeToggle = ({ theme, toggleTheme }) => (
             `}
     >
       {theme === "dark" ? (
+        // Ícono de luna para modo oscuro
         <MoonIcon className="w-5 h-5 text-gray-800" />
       ) : (
+        // Ícono de sol para modo claro
         <SunIcon className="w-5 h-5 text-yellow-400" />
       )}
     </span>

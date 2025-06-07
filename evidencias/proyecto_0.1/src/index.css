@@ -1,15 +1,21 @@
-@import "tailwindcss";
+/* index.css*/
+
+@import "tailwindcss"; /* Importa utilidades de TailwindCSS */
+
+/* Define la variante personalizada 'dark' para aplicar estilos en modo oscuro */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Estilos base aplicados a elementos HTML principales */
 @layer base {
   html {
-    @apply transition-colors duration-300;
+    @apply transition-colors duration-300; /* Transición suave de colores al cambiar de tema */
   }
   body {
-    @apply bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-200;
+    @apply bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-200; /* Fondo y texto según el tema */
   }
 }
 
+/* Variables y estilos globales para fuentes y renderizado */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -20,6 +26,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Color de placeholder en inputs para modo claro y oscuro */
 input::placeholder {
   color: #a3a3a3; /* color para modo claro */
 }
@@ -27,6 +34,7 @@ input::placeholder {
   color: #d1d5db; /* color para modo oscuro */
 }
 
+/* Estilos para enlaces */
 a {
   font-weight: 500;
   color: #646cff;
@@ -36,6 +44,7 @@ a:hover {
   color: #535bf2;
 }
 
+/* Estilos generales para el body */
 body {
   margin: 0;
   display: flex;
@@ -44,15 +53,17 @@ body {
   min-height: 100vh;
 }
 
+/* Estilos para títulos h1 en ambos temas */
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-  color:black;
+  color: black;
 }
-.dark h1{
+.dark h1 {
   color: white;
 }
 
+/* Estilos para botones en ambos temas */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
