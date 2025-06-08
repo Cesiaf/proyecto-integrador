@@ -99,9 +99,9 @@ function App() {
   // Obtener productos de la API al montar el componente
   useEffect(() => {
     axios
-      .get("https://dummyjson.com/products")
+      .get("https://dummyjson.com/products?limit=100")
       .then((res) => setProductos(res.data.products))
-      .catch((err) => setMensaje("Error al cargar productos."));
+      .catch((err) => setMensaje(`Error al cargar productos: ${err.message}`));
   }, []);
 
   // Limpiar mensaje después de 3 segundos
