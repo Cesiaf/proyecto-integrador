@@ -1,37 +1,44 @@
-// components/ThemeToggle.jsx
-
 import React from "react";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
 
-/*ThemeToggle (Componente de botón para alternar entre los temas claro y oscuro.)*/
 const ThemeToggle = ({ theme, toggleTheme }) => (
   <button
     onClick={toggleTheme}
     aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
     className={`
-            flex items-center w-14 h-8 rounded-full p-1 transition-colors duration-300
-            ${theme === "dark" ? "bg-gray-700" : "bg-gray-200"}
-        `}
+      relative flex items-center w-16 h-9 rounded-full p-1 border-2
+      transition-colors duration-300
+      ${theme === "dark"
+        ? "bg-gradient-to-r from-gray-700 to-gray-900 border-gray-600"
+        : "bg-gradient-to-r from-yellow-200 to-yellow-400 border-yellow-300"}
+      shadow-inner
+    `}
+    style={{ outline: "none" }}
   >
-    {/* Indicador deslizante con ícono de tema */}
+    {/* Slider */}
     <span
       className={`
-                flex items-center justify-center w-6 h-6 rounded-full shadow-md transform
-                transition-transform duration-300
-                ${
-                  theme === "dark"
-                    ? "translate-x-6 bg-yellow-400"
-                    : "translate-x-0 bg-white"
-                }
-            `}
+        absolute top-1 left-1 w-7 h-7 rounded-full shadow-lg flex items-center justify-center
+        transition-transform duration-300
+        ${theme === "dark"
+          ? "translate-x-7 bg-gray-800"
+          : "translate-x-0 bg-white"}
+      `}
+      style={{
+        boxShadow: theme === "dark"
+          ? "0 2px 8px 0 rgba(0,0,0,0.5)"
+          : "0 2px 8px 0 rgba(255,193,7,0.3)"
+      }}
     >
       {theme === "dark" ? (
-        // Ícono de luna para modo oscuro
-        <MoonIcon className="w-5 h-5 text-gray-800" />
+        <MoonIcon className="w-5 h-5 text-yellow-300" />
       ) : (
-        // Ícono de sol para modo claro
-        <SunIcon className="w-5 h-5 text-yellow-400" />
+        <SunIcon className="w-5 h-5 text-yellow-500" />
       )}
+    </span>
+    {/* Espacio para accesibilidad */}
+    <span className="sr-only">
+      {theme === "dark" ? "Modo oscuro" : "Modo claro"}
     </span>
   </button>
 );

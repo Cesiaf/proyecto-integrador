@@ -146,7 +146,7 @@ function App() {
             onOrdenChange={setOrden}
           />
           <button
-            className="h-10 border px-4 py-2 rounded bg-gray-100 dark:bg-gray-800
+            className="h-10 border px-4 py-2 rounded text-black dark:text-white bg-gray-200 dark:bg-gray-800
             active:scale-95 transition shadow-md shadow-black/30 flex items-center"
             onClick={() => setShowStats((s) => !s)}
           >
