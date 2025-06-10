@@ -10,6 +10,16 @@ Este proyecto es un catálogo interactivo de productos construido con React, Vit
 - 📊 **Recharts** (para gráficos)
 - 💡 **API utilizada:** [https://dummyjson.com/products](https://dummyjson.com/products)
 
+## 📋 Requisitos previos
+
+Antes de instalar y ejecutar este proyecto, se de tener instalado:
+
+- **Node.js** (versión 18.x o superior recomendada)  
+  Descarga desde: https://nodejs.org/
+- **npm** (incluido con Node.js)
+- (Opcional) **Git** para clonar el repositorio  
+  Descarga desde: https://git-scm.com/
+
 ## 🧰 Instalación y ejecución del proyecto
 
 1. **Clona el repositorio o descarga el proyecto.**
